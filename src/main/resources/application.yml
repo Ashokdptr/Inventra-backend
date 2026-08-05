@@ -1,12 +1,12 @@
 server:
-  port: 8081
+  port: ${PORT:8081}
 
 spring:
   application:
     name: inventra-backend
 
   datasource:
-    url: jdbc:mysql://localhost:3306/presentation?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    url: ${DB_URL:jdbc:mysql://localhost:3306/presentation?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true}
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -25,8 +25,8 @@ spring:
 
   data:
     redis:
-      host: localhost
-      port: 6379
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
 
   mail:
     host: ${MAIL_HOST:smtp.gmail.com}
@@ -41,10 +41,10 @@ spring:
             enable: true
 
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: ${KAFKA_SERVERS:localhost:9092}
 
 jwt:
-  secret: inventra-super-secret-key-minimum-256-bits-long-for-hmac-sha-do-not-use-in-prod
+  secret: ${JWT_SECRET:inventra-super-secret-key-minimum-256-bits-long-for-hmac-sha-do-not-use-in-prod}
   expiration: 86400000
   refresh-expiration: 604800000
 
@@ -62,4 +62,3 @@ logging:
     com.inventra: INFO
     org.springframework.security: WARN
     org.hibernate.SQL: WARN
-
