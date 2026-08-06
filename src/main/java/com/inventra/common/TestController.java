@@ -6,8 +6,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TestController {
 
-    @GetMapping("/test")
-    public String test() {
-        return "Inventra Backend Running!";
+    @GetMapping("/")
+    public String home() {
+        return "Inventra Backend Running";
+    }
+
+    @GetMapping("/health")
+    public String health() {
+        return "OK";
     }
 }
