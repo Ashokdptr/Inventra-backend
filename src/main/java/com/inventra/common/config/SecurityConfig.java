@@ -40,18 +40,26 @@ public class SecurityConfig {
             .cors(c -> c.configurationSource(corsSource()))
             .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(a -> a
-                .requestMatchers(
-                    "/api/v1/auth/login",
-                    "/api/v1/auth/register",
-                    "/api/v1/auth/forgot-password",
-                    "/api/v1/auth/reset-password",
-                    "/api/v1/auth/otp/request",
-                    "/api/v1/auth/otp/verify",
-                    "/api/v1/auth/change-password",
-                    "/ws/**",
-                    "/swagger-ui/**",
-                    "/api-docs/**"
-                ).permitAll()
+                    .requestMatchers(
+                            "/",
+                            "/error",
+
+                            "/api/v1/auth/login",
+                            "/api/v1/auth/register",
+                            "/api/v1/auth/forgot-password",
+                            "/api/v1/auth/reset-password",
+                            "/api/v1/auth/otp/request",
+                            "/api/v1/auth/otp/verify",
+                            "/api/v1/auth/change-password",
+
+                            "/swagger-ui.html",
+                            "/swagger-ui/**",
+                            "/api-docs",
+                            "/api-docs/**",
+                            "/v3/api-docs/**",
+
+                            "/ws/**"
+                    ).permitAll()
                 .requestMatchers("/api/v1/users/**").hasAnyRole("ADMIN","MANAGER")
                 .requestMatchers("/api/v1/audit/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
@@ -82,7 +90,10 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsSource() {
         CorsConfiguration cfg = new CorsConfiguration();
-        cfg.setAllowedOrigins(List.of("http://localhost:4200"));
+        cfg.setAllowedOriginPatterns(List.of(
+                "http://localhost:4200",
+                "https://*.railway.app"
+        ));
         cfg.setAllowedMethods(List.of("GET","POST","PUT","PATCH","DELETE","OPTIONS"));
         cfg.setAllowedHeaders(List.of("*"));
         cfg.setAllowCredentials(true);
